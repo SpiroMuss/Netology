@@ -14,7 +14,7 @@ INSERT INTO streaming_service.musician VALUES
 INSERT INTO streaming_service.album VALUES
 (DEFAULT, 'Death Magnetic', '01-01-2008'),
 (DEFAULT, 'Seven Inches of Satanic Panic', '09-13-2019'),
-(DEFAULT, E'Hollywood\'s Bleeding', '09-06-2019'),
+(DEFAULT, 'Hollywood''s Bleeding', '09-06-2019'),
 (DEFAULT, 'Death Magnetic 2', '01-01-2020');
 
 INSERT INTO streaming_service.compilation VALUES

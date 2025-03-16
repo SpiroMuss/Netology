@@ -67,8 +67,9 @@ WHERE m.id = 1;
 SELECT a.name
 FROM streaming_service.album a
 JOIN streaming_service.album_musician am ON a.id = am.album_id
+JOIN streaming_service.genre_musician mg ON am.musician_id = mg.musician_id
 GROUP BY a.name
-HAVING COUNT(am.musician_id) > 1;
+HAVING COUNT(mg.genre_id) > 1;
 
 --4.2
 SELECT s.name
