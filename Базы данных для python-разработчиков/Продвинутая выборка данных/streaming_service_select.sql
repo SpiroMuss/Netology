@@ -21,8 +21,7 @@ WHERE "name" NOT LIKE '% %';
 --2.5
 SELECT "name"
 FROM streaming_service.song
-WHERE UPPER("name") LIKE '%MY%' 
-	OR UPPER("name") LIKE '%МОЙ%';
+WHERE UPPER("name") SIMILAR TO '(|% )MY(| %)';
 
 --3.1
 SELECT g.name AS genre, COUNT(gm.musician_id) AS musician_count
@@ -50,7 +49,7 @@ WHERE NOT EXISTS (
 	FROM streaming_service.album ss_album
 	JOIN streaming_service.album_musician am ON ss_album.id = am.album_id
 	WHERE m.id = am.musician_id
-		AND ss_album.date BETWEEN '2020-01-01' AND '2020-12-31'
+		AND ss_album.date BETWEEN '01-01-2020' AND '12-31-2020'
 );
 
 --3.5
