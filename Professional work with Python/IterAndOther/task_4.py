@@ -1,5 +1,4 @@
 import types
-from pickle import EMPTY_LIST
 
 
 def flat_generator(list_of_list):
