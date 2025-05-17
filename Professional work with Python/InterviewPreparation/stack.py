@@ -16,15 +16,14 @@ class Stack:
 
     def pop(self):
         if len(self.list) == 0:
-            raise IndexError
+            raise IndexError('pop from empty list')
         else:
-            element = self.list[-1]
-            self.list.remove(self.list[-1])
+            element = self.list.pop(-1)
             return element
 
     def peek(self):
         if len(self.list) == 0:
-            raise IndexError
+            raise IndexError('peek from empty list')
         else:
             element = self.list[-1]
             return element
