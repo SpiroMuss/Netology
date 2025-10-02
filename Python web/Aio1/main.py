@@ -49,18 +49,21 @@ async def save_characters(characters_info: list[dict]):
 
 async def main():
     await init_orm()
+
     async with aiohttp.ClientSession() as http_session:
         response = await http_session.get("https://www.swapi.tech/api/people")
         people_count = (await response.json())["total_records"]
 
-        i = 1 # Попытался вставить enumerate, но поломался chunked. Решил пока захардкодить и не разбираться в чем дело.
-        chunks_count = people_count // MAX_REQUESTS + (1 if people_count % MAX_REQUESTS > 0 else 0)
         for chunk in chunked(range(1, people_count + 1), MAX_REQUESTS):
             coros = [get_character(char_id, session=http_session) for char_id in chunk]
             characters_info = await asyncio.gather(*coros)
-            await save_characters(characters_info)
-            print(f"{i} / {chunks_count} chunk saved.")
-            i += 1
+            save_task = asyncio.create_task(save_characters(characters_info))
+
+    tasks = asyncio.all_tasks()
+    current_task = asyncio.current_task()
+    tasks.remove(current_task)
+    for task in tasks:
+        await task
 
     await close_orm()
 
