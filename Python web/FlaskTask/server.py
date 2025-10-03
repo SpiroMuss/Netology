@@ -79,7 +79,7 @@ app.add_url_rule(
 )
 
 app.add_url_rule(
-    "/users/<int:user_id>",
+    "/users/<int:adv>",
     view_func=user_view,
     methods=["GET", "PATCH", "DELETE"]
 )

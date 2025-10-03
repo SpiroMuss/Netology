@@ -3,6 +3,8 @@ import os
 import atexit
 from sqlalchemy import create_engine, Integer, String, DateTime, func, ForeignKey
 from sqlalchemy.orm import DeclarativeBase, mapped_column, Mapped, sessionmaker, relationship
+from dotenv import load_dotenv
+load_dotenv()
 
 POSTGRES_USER = os.getenv('POSTGRES_USER', 'postgres')
 POSTGRES_PASSWORD = os.getenv('POSTGRES_PASSWORD', 'postgres')
