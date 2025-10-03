@@ -1,6 +1,12 @@
 import requests
 
-response = requests.get("http://127.0.0.1:5000/hello")
+response = requests.post("http://127.0.0.1:5000/users",
+                         json={
+                             "header": "header",
+                             "comment": "comment",
+                             "owner": "owner",
+                         },
+                         )
 
 
 print(response.text)
