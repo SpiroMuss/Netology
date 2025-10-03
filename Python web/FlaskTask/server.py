@@ -4,6 +4,7 @@ from sqlalchemy.exc import IntegrityError
 
 from models import DbSession, Advertisement
 from errors import HttpError
+from schema import CreateAdvertisementRequest, UpdateAdvertisementRequest, validate
 
 app = Flask("app")
 
@@ -45,7 +46,7 @@ class AdvView(MethodView):
 
 
     def post(self):
-        json_data = request.json
+        json_data = validate(CreateAdvertisementRequest, request.json)
 
         adv = Advertisement(
             header=json_data["header"],
@@ -56,14 +57,17 @@ class AdvView(MethodView):
         return jsonify(adv.id_json)
 
     def patch(self, adv_id: int):
-        json_data = request.json
+        json_data = validate(UpdateAdvertisementRequest, request.json)
+
         adv = get_advertisement_by_id(adv_id)
+
         if "header" in json_data:
             adv.header = json_data["header"]
         if "comment" in json_data:
             adv.comment = json_data["comment"]
         if "owner" in json_data:
             adv.owner = json_data["owner"]
+
         add_advertisement(adv)
         return jsonify(adv.id_json)
 
