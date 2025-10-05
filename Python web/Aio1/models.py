@@ -1,10 +1,9 @@
 import os
 from dotenv import load_dotenv
-load_dotenv()
-
 from sqlalchemy.ext.asyncio import create_async_engine, async_sessionmaker, AsyncAttrs
 from sqlalchemy.orm import DeclarativeBase, mapped_column, MappedColumn
 from sqlalchemy import Integer, String
+load_dotenv()
 
 
 POSTGRES_USER = os.getenv('POSTGRES_USER', 'postgres')
