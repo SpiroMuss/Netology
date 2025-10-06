@@ -54,7 +54,7 @@ class AdvView(web.View):
 
     @property
     def adv_id(self) -> int:
-        return int(self.request.match_info(["adv_id"]))
+        return int(self.request.match_info["adv_id"])
 
     @property
     async def advertisement(self) -> Advertisement:
@@ -63,23 +63,43 @@ class AdvView(web.View):
 
     async def get(self):
         adv = await self.advertisement
-        return adv
+        return web.json_response(adv.json)
 
     async def post(self):
-        pass
+        json_data = await self.request.json()
+        adv = Advertisement(
+            header=json_data["header"],
+            comment=json_data["comment"],
+            owner=json_data["owner"],
+        )
+        await add_advertisement(self.session, adv)
+        return web.json_response(adv.id_json)
 
-    async def patch(self, adv_id):
-        pass
+    async def patch(self):
+        adv = await self.advertisement
+        json_data = await self.request.json()
+        if "header" in json_data:
+            adv.header = json_data["header"]
+        if "comment" in json_data:
+            adv.comment = json_data["comment"]
+        if "owner" in json_data:
+            adv.owner = json_data["owner"]
+        await add_advertisement(self.session, adv)
+        return web.json_response(adv.id_json)
 
-    async def delete(self, adv_id):
-        pass
+
+    async def delete(self):
+        adv = await self.advertisement
+        await self.session.delete(adv)
+        await self.session.commit()
+        return web.json_response({"status": "deleted"})
 
 
 app.add_routes([
     web.post(r"/advertisements/", AdvView),
-    web.get(r"/advertisements/{adv_id: \d+}", AdvView),
-    web.patch(r"/advertisements/{adv_id: \d+}", AdvView),
-    web.delete(r"/advertisements/{adv_id: \d+}", AdvView),
+    web.get(r"/advertisements/{adv_id:\d+}", AdvView),
+    web.patch(r"/advertisements/{adv_id:\d+}", AdvView),
+    web.delete(r"/advertisements/{adv_id:\d+}", AdvView),
 ])
 
 web.run_app(app)
