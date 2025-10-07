@@ -21,7 +21,7 @@ class Advertisement(Base):
 
     __tablename__ = "advertisement"
 
-    header: MappedColumn[str] = mapped_column(String)
+    title: MappedColumn[str] = mapped_column(String)
     comment: MappedColumn[str] = mapped_column(String, nullable=True)
     price: MappedColumn[float] = mapped_column(Float)
     owner: MappedColumn[str] = mapped_column(String)
@@ -31,7 +31,7 @@ class Advertisement(Base):
     def json(self):
         return {
             "id": self.id,
-            "header": self.header,
+            "title": self.title,
             "comment": self.comment,
             "price": self.price,
             "owner": self.owner,
