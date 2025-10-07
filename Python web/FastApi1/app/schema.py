@@ -13,6 +13,12 @@ class CreateAdvertisementRequest(BaseModel):
     owner: str
 
 
+# class SearchAdvertisementRequest(BaseModel):
+#     title: str | None
+#     price: float | None
+#     owner: str | None
+
+
 class GetAdvertisementResponse(BaseModel):
     id: int
     title: str
@@ -27,6 +33,6 @@ class SearchAdvertisementResponse(BaseModel):
 
 
 class UpdateAdvertisementRequest(BaseModel):
-    title: str | None
-    comment: str | None
-    price: float | None
+    title: str | None = None
+    comment: str | None = None
+    price: float | None = None
